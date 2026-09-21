@@ -1,0 +1,13 @@
+# STM32CubeIDE
+Debug/
+Release/
+*.o
+*.d
+*.elf
+*.list
+*.map
+
+# Proteus
+*.PWI
+*.DBK
+* Backup Of *.pdsprj
