@@ -114,41 +114,29 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /* Declare the initial time (e.g., 00:00:00) */
-  int hour = 0;
-  int minute = 0;
-  int second = 0;
+//  int hour = 0;
+//  int minute = 0;
+//  int second = 0;
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-	  clearAllClock();
+  uint16_t clock_pins[12] = {GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_6, GPIO_PIN_7,
+  	                             GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_10, GPIO_PIN_11,
+  	                             GPIO_PIN_12, GPIO_PIN_13, GPIO_PIN_14, GPIO_PIN_15};
 
-	  /* Turn on the 3 lights corresponding to the current Hour, Minute, and Second. */
-	  setNumberOnClock(hour);
-	  setNumberOnClock(minute / 5);
-	  setNumberOnClock(second / 5);
+  for (int i = 0; i < 12; i++) {
+      HAL_GPIO_WritePin(GPIOA, clock_pins[i], GPIO_PIN_SET);
+  }
 
-	  HAL_Delay(200);
-
-	  /* Update time system */
-	  second++;
-	  if(second >= 60) {
-		  second = 0;
-		  minute++;
-	  }
-
-	  if(minute >= 60) {
-		  minute = 0;
-		  hour++;
-	  }
-
-	  if(hour >= 12) {
-		  hour = 0;
-	  }
+  while (1) {
     /* USER CODE END WHILE */
+	  for(int i = 0; i < 12; i++) {
+		  HAL_GPIO_WritePin(GPIOA, clock_pins[i], GPIO_PIN_RESET);
+		  HAL_Delay(500);
+		  HAL_GPIO_WritePin(GPIOA, clock_pins[i], GPIO_PIN_SET);
+	  }
 
     /* USER CODE BEGIN 3 */
   }
